@@ -1,16 +1,19 @@
-import regulated_reader
+from regulated_reader import RegulatedReader
 
-def getnext(soup):
-	return soup.find(id='topnext').get('href')
+class GirlGenius(RegulatedReader):
+	def __init__(self):
+		self.name  = 'girlgenius'
+		self.title = "Girl Genius"
+		self.link = "http://www.girlgeniusonline.com/comic.php"
+		self.description = "Girl Genius Online Comic"
+	
+	def getnext(self, soup):
+		return soup.find(id='topnext').get('href')
 
-def getinfo(soup):
-	return {
-		'title': 'Girl Genius for '+soup.find(id='datestring').text,
-		'description': str(soup.find(id='comicbody'))
-	}
+	def getinfo(self, soup):
+		return {
+			'title': 'Girl Genius for '+soup.find(id='datestring').text,
+			'description': str(soup.find(id='comicbody'))
+		}
 
-regulated_reader.build_rss('girlgenius',
-		"Girl Genius",
-		"http://www.girlgeniusonline.com/comic.php",
-		"Girl Genius Online Comic",
-		getnext, getinfo)
+GirlGenius().build()
