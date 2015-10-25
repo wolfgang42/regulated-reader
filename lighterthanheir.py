@@ -8,12 +8,12 @@ class LighterThanHeir(RegulatedReader):
 		self.description = "Lighter than Heir"
 	
 	def getnext(self, soup):
-		return 'http://lighterthanheir.com'+soup.find('a', class_="next", rel="next").get('href')
+		return soup.find('a', class_="next", rel="next").get('href')
 
 	def getinfo(self, soup):
 		return {
-			'title': soup.find(id='newsheader').text,
-			'description': str(soup.find(id='comicbody'))+str(soup.find(id='newsarea'))
+			'title': soup.find(id='newsarea').find(class_='cc-newsheader').text,
+			'description': str(soup.find(id='cc-comic'))+str(soup.find(id='newsarea'))
 		}
 
 LighterThanHeir().build()
